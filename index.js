@@ -28,41 +28,41 @@ async function run() {
 
     // fruits routes
     app.post("/task", async (req, res) => {
-      const fruitsData = req.body;
-      const result = await taskCollection.insertOne(fruitsData);
+      const taskData = req.body;
+      const result = await taskCollection.insertOne(taskData);
       res.send(result);
       // console.log(result);
     });
 
-    app.get("/fruits", async (req, res) => {
-      const fruitsData = fruitsCollection.find();
-      const result = await fruitsData.toArray();
+    app.get("/task", async (req, res) => {
+      const taskData = taskCollection.find();
+      const result = await taskData.toArray();
       res.send(result);
       console.log(result);
     });
 
-    app.get("/fruits/:id", async (req, res) => {
+    app.get("/task/:id", async (req, res) => {
       const id = req.params.id;
-      const fruitsData = await fruitsCollection.findOne({
+      const taskData = await taskCollection.findOne({
         _id: new ObjectId(id),
       });
-      res.send(fruitsData);
-      console.log(fruitsData);
+      res.send(taskData);
+      console.log(taskData);
     });
 
-    app.patch("/fruits/:id", async (req, res) => {
+    app.patch("/task/:id", async (req, res) => {
       const id = req.params.id;
       const updateData = req.body;
-      const result = await fruitsCollection.updateOne(
+      const result = await taskCollection.updateOne(
         { _id: new ObjectId(id) },
         { $set: updateData }
       );
       res.send(result);
     });
 
-    app.delete("/fruits/:id", async (req, res) => {
+    app.delete("/task/:id", async (req, res) => {
       const id = req.params.id;
-      const result = await fruitsCollection.deleteOne({
+      const result = await taskCollection.deleteOne({
         _id: new ObjectId(id),
       });
       res.send(result);
@@ -75,7 +75,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("WelCome To Our OrgOrganic Fruits Shop");
+  res.send("WelCome To Our Task ManagementDB");
 });
 
 app.listen(port, () => {
